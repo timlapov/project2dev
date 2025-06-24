@@ -1,27 +1,107 @@
 @startuml
-'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+title Project ⇄ Developer — UML Class Diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+' =======================
+' Base Entities (Users)
+' =======================
+class User {
+  +id : Long
+  +name : String
+  +email : String
+  +passwordHash : String
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class ProjectOwner {
+  +organization : String
 }
+
+class Developer {
+  +bio : String
+  +yearsExperience : int
+}
+
+User <|-- ProjectOwner
+User <|-- Developer
+
+' =======================
+' Projects
+' =======================
+class Project {
+  +id : Long
+  +title : String
+  +description : String
+  +deliveryDate : LocalDate
+  +budget : BigDecimal
+  +status : ProjectStatus
+}
+
+enum ProjectStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+' =======================
+' Themes
+' =======================
+class Theme {
+  +id : Long
+  +name : String
+}
+
+Project "1" -- "0..1" Theme : theme
+ProjectOwner "1" -- "0..*" Project : publishes >
+
+' =======================
+' Applications
+' =======================
+class Application {
+  +id : Long
+  +applicationDate : LocalDateTime
+  +message : String
+  +status : ApplicationStatus
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REFUSED
+  WITHDRAWN
+}
+
+Project "1" -- "0..*" Application
+Developer "1" -- "0..*" Application
+
+' =======================
+' Skills
+' =======================
+class Skill {
+  +title : String
+  +description : String
+}
+
+Developer "*" -- "*" Skill
+
+' =======================
+' Repositories (JPA/Hibernate)
+' =======================
+interface GenericRepository<T> {
+  +findById(id : Long) : T
+  +findAll() : List<T>
+  +save(entity : T) : void
+  +update(entity : T) : void
+  +delete(entity : T) : void
+}
+
+interface ProjectRepository
+interface DeveloperRepository
+interface ProjectOwnerRepository
+interface ApplicationRepository
+
+GenericRepository <|.. ProjectRepository
+GenericRepository <|.. DeveloperRepository
+GenericRepository <|.. ProjectOwnerRepository
+GenericRepository <|.. ApplicationRepository
 
 @enduml
