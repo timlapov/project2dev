@@ -3,7 +3,7 @@ package art.lapov.project2dev.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class DataBase {
+public class Database {
     private static EntityManager em;
 
     public static EntityManager getManager() {
@@ -17,5 +17,11 @@ public class DataBase {
 
     public static void reset() {
         em = null;
+    }
+
+    public static void closeEntityManager() {
+        if (em != null && em.isOpen()) {
+            em.close();
+        }
     }
 }
