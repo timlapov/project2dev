@@ -1,6 +1,13 @@
 package art.lapov.project2dev.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "skill")
 public class Skill {
+    @Id
     private String title;
     private String description;
 
