@@ -10,7 +10,9 @@ public class Main {
         System.out.println("Welcome to Project2Dev!");
         System.out.println("*".repeat(100));
         DataBase.getManager();
-        System.out.println("DataBase is ready!");
+        System.out.println("DataBase is ready!\n");
+
+        System.out.println("Add 3 developers and check the output from the database: ");
 
     }
 }

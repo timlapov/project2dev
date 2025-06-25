@@ -18,7 +18,7 @@ class ProjectOwner {
 
 class Developer {
   +bio : String
-  +yearsExperience : int
+  +yearsOfExperience : int
 }
 
 User <|-- ProjectOwner
@@ -31,8 +31,9 @@ class Project {
   +id : Long
   +title : String
   +description : String
+  +createdAt : LocalDate
   +deliveryDate : LocalDate
-  +budget : BigDecimal
+  +budget : int
   +status : ProjectStatus
 }
 
@@ -58,7 +59,7 @@ ProjectOwner "1" -- "0..*" Project : publishes >
 ' =======================
 class Application {
   +id : Long
-  +applicationDate : LocalDateTime
+  +appliedAt : LocalDateTime
   +message : String
   +status : ApplicationStatus
 }
