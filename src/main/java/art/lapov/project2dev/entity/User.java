@@ -30,6 +30,13 @@ public abstract class User {
         this.passwordHash = passwordHash;
     }
 
+    public User( Long id, String passwordHash, String email, String name) {
+        this.id = id;
+        this.passwordHash = passwordHash;
+        this.email = email;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

@@ -2,27 +2,13 @@ package art.lapov.project2dev.repository;
 
 import art.lapov.project2dev.entity.Project;
 import art.lapov.project2dev.repository.interfaces.ProjectRepository;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class ProjectRepositoryImpl implements ProjectRepository {
-    @Override
-    public List<Project> findAll() {
-        return List.of();
-    }
+public class ProjectRepositoryImpl extends AbstractRepository<Project, Long> implements ProjectRepository {
 
-    @Override
-    public Project findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public boolean save(Project entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        return false;
+    public ProjectRepositoryImpl(EntityManager em) {
+        super(em, Project.class);
     }
 }

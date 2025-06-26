@@ -7,47 +7,10 @@ import jakarta.persistence.PersistenceException;
 
 import java.util.List;
 
-public class DeveloperRepositoryImpl implements DeveloperRepository {
-
-    private final EntityManager em;
+public class DeveloperRepositoryImpl extends AbstractRepository<Developer, Long> implements DeveloperRepository {
 
     public DeveloperRepositoryImpl(EntityManager em) {
-        this.em = em;
+        super(em, Developer.class);
     }
 
-    @Override
-    public List<Developer> findAll() {
-        try {
-            return em.createQuery("FROM Developer d", Developer.class)
-                    .getResultList();
-        } catch (PersistenceException e) {
-            System.err.println(e);
-        }
-        return null;
-    }
-
-    @Override
-    public Developer findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public boolean save(Developer entity) {
-        if (entity != null) {
-            try {
-                em.getTransaction().begin();
-                em.persist(entity);
-                em.getTransaction().commit();
-                return true;
-            } catch (PersistenceException e) {
-                System.err.println(e);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        return false;
-    }
 }

@@ -34,11 +34,14 @@ public class Main {
             Developer dev3 = new Developer(
                     "Nabil",
                     "nabs@icloud.com",
-                    "chdc777288vbcalj",
+                    "123456qwerty",
                     "Je suis developpeur du monde",
                     2);
             developerRepository.save(dev1);
             developerRepository.save(dev2);
+            developerRepository.save(dev3);
+            developerRepository.findAll().forEach(System.out::println);
+            dev3.setPasswordHash("<PASSWORD>");
             developerRepository.save(dev3);
             developerRepository.findAll().forEach(System.out::println);
             System.out.println("\n");

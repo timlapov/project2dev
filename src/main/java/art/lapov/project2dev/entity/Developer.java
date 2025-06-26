@@ -42,6 +42,13 @@ public class Developer extends User {
         this.yearsOfExperience = yearsOfExperience;
     }
 
+    public Developer(Long id, String name, String email, String passwordHash, String bio, Integer yearsOfExperience) {
+        super(id, name, email, passwordHash);
+        this.bio = bio;
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+
     public String getBio() {
         return bio;
     }
