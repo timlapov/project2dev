@@ -1,8 +1,20 @@
 package art.lapov.project2dev;
 
 import art.lapov.project2dev.entity.Developer;
+import art.lapov.project2dev.repository.ApplicationRepositoryImpl;
 import art.lapov.project2dev.repository.Database;
+import art.lapov.project2dev.repository.DataLoader;
 import art.lapov.project2dev.repository.DeveloperRepositoryImpl;
+import art.lapov.project2dev.repository.ProjectOwnerRepositoryImpl;
+import art.lapov.project2dev.repository.ProjectRepositoryImpl;
+import art.lapov.project2dev.repository.SkillRepositoryImpl;
+import art.lapov.project2dev.repository.ThemeRepositoryImpl;
+import art.lapov.project2dev.repository.interfaces.ApplicationRepository;
+import art.lapov.project2dev.repository.interfaces.DeveloperRepository;
+import art.lapov.project2dev.repository.interfaces.ProjectOwnerRepository;
+import art.lapov.project2dev.repository.interfaces.ProjectRepository;
+import art.lapov.project2dev.repository.interfaces.SkillRepository;
+import art.lapov.project2dev.repository.interfaces.ThemeRepository;
 import jakarta.persistence.EntityManager;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -17,33 +29,24 @@ public class Main {
             EntityManager em = Database.getManager();
             System.out.println("DataBase is ready!\n");
 
-            System.out.println("Add 3 developers and check the output from the database: ");
-            DeveloperRepositoryImpl developerRepository = new DeveloperRepositoryImpl(em);
-            Developer dev1 = new Developer(
-                    "Timothée",
-                    "timlapov@icloud.com",
-                    "chdchdsjbcjksanzlxkvbcalj",
-                    "Je suis developpeur russe",
-                    2);
-            Developer dev2 = new Developer(
-                    "Patrick",
-                    "l.patrick@icloud.com",
-                    "chdzlxkvbcalj",
-                    "Je suis developpeur français",
-                    2);
-            Developer dev3 = new Developer(
-                    "Nabil",
-                    "nabs@icloud.com",
-                    "123456qwerty",
-                    "Je suis developpeur du monde",
-                    2);
-            developerRepository.save(dev1);
-            developerRepository.save(dev2);
-            developerRepository.save(dev3);
-            developerRepository.findAll().forEach(System.out::println);
-            dev3.setPasswordHash("<PASSWORD>");
-            developerRepository.save(dev3);
-            developerRepository.findAll().forEach(System.out::println);
+            System.out.println("Loading mock data...");
+            SkillRepository skillRepo           = new SkillRepositoryImpl(em);
+            ThemeRepository themeRepo           = new ThemeRepositoryImpl(em);
+            DeveloperRepository devRepo         = new DeveloperRepositoryImpl(em);
+            ProjectOwnerRepository ownerRepo    = new ProjectOwnerRepositoryImpl(em);
+            ProjectRepository projRepo          = new ProjectRepositoryImpl(em);
+            ApplicationRepository appRepo       = new ApplicationRepositoryImpl(em);
+            DataLoader loader = new DataLoader(
+                    skillRepo, themeRepo, devRepo,
+                    ownerRepo, projRepo, appRepo);
+            loader.loadData();
+
+            System.out.println("All developers:");
+            devRepo.findAll().forEach(System.out::println);
+
+            System.out.println("All projects:");
+            projRepo.findAll().forEach(System.out::println);
+
             System.out.println("\n");
 
 

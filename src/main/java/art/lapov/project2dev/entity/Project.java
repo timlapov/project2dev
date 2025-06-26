@@ -138,6 +138,14 @@ public class Project {
         application.setProject(null);
     }
 
+    public ProjectOwner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(ProjectOwner owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
