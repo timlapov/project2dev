@@ -18,6 +18,9 @@ import art.lapov.project2dev.repository.interfaces.ProjectRepository;
 import art.lapov.project2dev.repository.interfaces.SkillRepository;
 import art.lapov.project2dev.repository.interfaces.ThemeRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
@@ -57,11 +60,16 @@ public class Main {
 
             // Search for a specific developer by email and print the result
             System.out.println("\nLooking for a developer by email: michael.brown@email.com");
-            System.out.println(devRepo.findByEmail("michael.brown@email.com"));
+            Optional<Developer> devOpt = devRepo.findByEmail("michael.brown@email.com");
+            devOpt.ifPresentOrElse(System.out::println, () -> System.out.println("Developer not found."));
 
             // Search for a skill by its ID (String) and print the result
             System.out.println("Looking for a skill by ID: Java");
-            System.out.println(skillRepo.findById("Java"));
+            skillRepo.findById("Java")
+                          .ifPresentOrElse(
+                                  skill -> System.out.println("Found skill: " + skill),
+                                  () -> System.out.println("Skill 'Java' not found.")
+                          );
 
             // Examples of using ApplicationRepositoryImpl methods
             System.out.println("\n--- ApplicationRepositoryImpl Examples ---");
@@ -92,11 +100,12 @@ public class Main {
             projRepo.findByStatus(art.lapov.project2dev.entity.enums.ProjectStatus.IN_PROGRESS).forEach(System.out::println);
 
             // Retrieve the theme "Data Science" for demonstration purposes
-            Theme dataScience = themeRepo.findById(3L);
-            if (dataScience != null) {
+            Optional<Theme> dataScience = themeRepo.findById(3L);
+            if (dataScience.isPresent()) {
                 // Find and print projects associated with the Data Science theme
-                System.out.println("Projects with theme: " + dataScience.getName());
-                projRepo.findByTheme(dataScience).forEach(System.out::println);
+                Theme ds = dataScience.get();
+                System.out.println("Projects with theme: " + ds.getName());
+                projRepo.findByTheme(ds).forEach(System.out::println);
             } else {
                 System.out.println("No themes found to demonstrate findByTheme.");
             }

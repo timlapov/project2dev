@@ -7,6 +7,7 @@ import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DeveloperRepositoryImpl extends AbstractRepository<Developer, Long> implements DeveloperRepository {
 
@@ -15,18 +16,18 @@ public class DeveloperRepositoryImpl extends AbstractRepository<Developer, Long>
     }
 
     @Override
-    public Developer findByEmail(String email) {
+    public Optional<Developer> findByEmail(String email) {
         try {
-            return em.createQuery( "SELECT d FROM Developer d WHERE d.email = :email",
+            return Optional.ofNullable(em.createQuery( "SELECT d FROM Developer d WHERE d.email = :email",
                             Developer.class)
                     .setParameter("email", email)
-                    .getSingleResultOrNull();
+                    .getSingleResultOrNull());
         } catch (PersistenceException e) {
             System.err.println(e);
         } catch (Exception e) {
             System.err.println(e);
         }
-        return null;
+        return Optional.empty();
     }
 
 }

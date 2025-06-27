@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractRepository<T, K> implements GenericRepository<T, K> {
     protected final EntityManager em;
@@ -27,13 +28,13 @@ public abstract class AbstractRepository<T, K> implements GenericRepository<T, K
     }
 
     @Override
-    public T findById(K id) {
+    public Optional<T> findById(K id) {
         try {
-            return em.find(entityClass, id);
+            return Optional.ofNullable(em.find(entityClass, id));
         } catch (PersistenceException e) {
             System.err.println(e);
+            return Optional.empty();
         }
-        return null;
     }
 
     @Override
