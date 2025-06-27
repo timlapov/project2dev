@@ -9,6 +9,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class Developer extends User {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<Application> applications;
+    private List<Application> applications = new ArrayList<>();
 
 
     public Developer() {}
@@ -96,6 +97,8 @@ public class Developer extends User {
         return "Developer{" +
                 "bio='" + bio + '\'' +
                 ", yearsOfExperience=" + yearsOfExperience +
-                "} " + super.toString();
+                ", skills=" + skills +
+                ", applications=" + applications +
+                '}';
     }
 }

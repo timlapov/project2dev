@@ -156,6 +156,9 @@ public class Project {
                 ", deliveryDate=" + deliveryDate +
                 ", budget=" + budget +
                 ", status=" + status +
+                ", applications=" + applications +
+                ", owner=" + owner +
+                ", theme=" + theme +
                 '}';
     }
 }

@@ -12,8 +12,7 @@
         <class>art.lapov.project2dev.entity.Theme</class>
         <class>art.lapov.project2dev.entity.User</class>
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://root:9DdvwG2@localhost:3307/project2dev"/>
-            <!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://root:9DdvwG2@localhost:3307/project2dev?createDatabaseIfNotExist=true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
 <!--            <property name="hibernate.format_sql" value="true"/>-->

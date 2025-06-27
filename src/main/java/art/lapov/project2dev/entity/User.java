@@ -1,5 +1,6 @@
 package art.lapov.project2dev.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
@@ -19,6 +20,7 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     private String passwordHash;
 
